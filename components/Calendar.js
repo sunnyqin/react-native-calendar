@@ -57,6 +57,7 @@ export default class Calendar extends Component {
     titleFormat: PropTypes.string,
     today: PropTypes.any,
     weekStart: PropTypes.number,
+    showTitle: PropTypes.bool
   };
 
   static defaultProps = {
@@ -74,6 +75,7 @@ export default class Calendar extends Component {
     startDate: moment().format('YYYY-MM-DD'),
     titleFormat: 'MMMM YYYY',
     weekStart: 1,
+    showTitle: true
   };
 
   componentDidMount() {
@@ -307,7 +309,7 @@ export default class Calendar extends Component {
 
     return (
       <View style={[styles.calendarContainer, this.props.customStyle.calendarContainer]}>
-        {this.renderTopBar()}
+        {this.props.showTitle ? this.renderTopBar() : null}
         {this.renderHeading(this.props.titleFormat)}
         {this.props.scrollEnabled ?
           <ScrollView
