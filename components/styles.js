@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   eventIndicator: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#00B03D',
   },
   dayCircleFiller: {
     justifyContent: 'center',

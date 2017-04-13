@@ -203,6 +203,7 @@ export default class Calendar extends Component {
     do {
       const dayIndex = renderIndex - offset;
       const isoWeekday = (renderIndex + weekStart) % 7;
+      const dayIsFuture = moment(startOfArgMonthMoment).clone().set('date', dayIndex + 1).isAfter(moment().startOf('day'))
 
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
         days.push((
@@ -214,6 +215,7 @@ export default class Calendar extends Component {
               this.selectDate(moment(startOfArgMonthMoment).set('date', dayIndex + 1));
             }}
             caption={`${dayIndex + 1}`}
+            isFuture={dayIsFuture}
             isToday={argMonthIsToday && (dayIndex === todayIndex)}
             isSelected={selectedMonthIsArg && (dayIndex === selectedIndex)}
             event={events && events[dayIndex]}

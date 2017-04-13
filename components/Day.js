@@ -20,6 +20,7 @@ export default class Day extends Component {
     event: PropTypes.object,
     isSelected: PropTypes.bool,
     isToday: PropTypes.bool,
+    isFuture: PropTypes.bool,
     isWeekend: PropTypes.bool,
     onPress: PropTypes.func,
     showEventIndicators: PropTypes.bool,
@@ -73,6 +74,7 @@ export default class Day extends Component {
       isWeekend,
       isSelected,
       isToday,
+      isFuture,
       showEventIndicators,
     } = this.props;
 
@@ -95,7 +97,8 @@ export default class Day extends Component {
               styles.eventIndicatorFiller,
               customStyle.eventIndicatorFiller,
               event && styles.eventIndicator,
-              event && customStyle.eventIndicator,
+              event && isFuture && customStyle.eventIndicator,
+              event && !isFuture && !isSelected && customStyle.pastEventIndicator,
               event && event.eventIndicator]}
             />
           }
