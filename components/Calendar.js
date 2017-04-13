@@ -88,7 +88,7 @@ export default class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedDate && this.props.selectedDate !== nextProps.selectedDate) {
+    if (this.props.selectedDate !== nextProps.selectedDate) {
       this.setState({selectedMoment: nextProps.selectedDate});
     }
     if (nextProps.currentMonth) {
@@ -186,15 +186,15 @@ export default class Calendar extends Component {
       startOfArgMonthMoment = argMoment.startOf('month');
 
     const
-      selectedMoment = moment(this.state.selectedMoment),
+      selectedMoment = this.state.selectedMoment && moment(this.state.selectedMoment),
       weekStart = this.props.weekStart,
       todayMoment = this.props.today ? moment(this.props.today) : moment(),
       todayIndex = todayMoment.date() - 1,
       argMonthDaysCount = argMoment.daysInMonth(),
       offset = (startOfArgMonthMoment.isoWeekday() - weekStart + 7) % 7,
       argMonthIsToday = argMoment.isSame(todayMoment, 'month'),
-      selectedIndex = moment(selectedMoment).date() - 1,
-      selectedMonthIsArg = selectedMoment.isSame(argMoment, 'month');
+      selectedIndex = selectedMoment && moment(selectedMoment).date() - 1,
+      selectedMonthIsArg = selectedMoment && selectedMoment.isSame(argMoment, 'month');
 
     const events = (eventsMap !== null)
       ? eventsMap[argMoment.startOf('month').format()]
