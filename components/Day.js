@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
+import moment from 'moment';
 
 export default class Day extends Component {
   static defaultProps = {
@@ -48,11 +49,13 @@ export default class Day extends Component {
     return dayCircleStyle;
   }
 
-  dayTextStyle = (isWeekend, isSelected, isToday, event) => {
+  dayTextStyle = (isSelectable, isWeekend, isSelected, isToday, event) => {
     const { customStyle } = this.props;
     const dayTextStyle = [styles.day, customStyle.day];
 
-    if (isToday && !isSelected) {
+    if (!isSelectable) {
+      dayTextStyle.push(customStyle.unselectableDay);
+    } else if (isToday && !isSelected) {
       dayTextStyle.push(styles.currentDayText, customStyle.currentDayText);
     } else if (isToday || isSelected) {
       dayTextStyle.push(styles.selectedDayText, customStyle.selectedDayText);
@@ -73,6 +76,7 @@ export default class Day extends Component {
       event,
       isWeekend,
       isSelected,
+      isSelectable,
       isToday,
       isFuture,
       showEventIndicators,
@@ -90,7 +94,7 @@ export default class Day extends Component {
       <TouchableOpacity onPress={this.props.onPress}>
         <View style={[styles.dayButton, customStyle.dayButton]}>
           <View style={this.dayCircleStyle(isWeekend, isSelected, isToday, event)}>
-            <Text style={this.dayTextStyle(isWeekend, isSelected, isToday, event)}>{caption}</Text>
+            <Text style={this.dayTextStyle(isSelectable, isWeekend, isSelected, isToday, event)}>{caption}</Text>
           </View>
           {showEventIndicators &&
             <View style={[

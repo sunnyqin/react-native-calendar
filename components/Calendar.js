@@ -55,6 +55,7 @@ export default class Calendar extends Component {
     showControls: PropTypes.bool,
     showEventIndicators: PropTypes.bool,
     startDate: PropTypes.any,
+    minDate: PropTypes.any,
     titleFormat: PropTypes.string,
     today: PropTypes.any,
     weekStart: PropTypes.number,
@@ -74,6 +75,7 @@ export default class Calendar extends Component {
     showControls: false,
     showEventIndicators: false,
     startDate: moment().format('YYYY-MM-DD'),
+    minDate: moment().format('YYYY-MM-DD'),
     titleFormat: 'MMMM YYYY',
     weekStart: 1,
     showTitle: true
@@ -205,6 +207,7 @@ export default class Calendar extends Component {
       const dayIndex = renderIndex - offset;
       const isoWeekday = (renderIndex + weekStart) % 7;
       const dayIsFuture = moment(startOfArgMonthMoment).clone().set('date', dayIndex + 1).isSameOrAfter(moment().startOf('day'))
+      const daySelectable = moment(startOfArgMonthMoment).clone().set('date', dayIndex + 1).isSameOrAfter(moment(this.props.minDate, 'YYYY-MM-DD').toISOString())
 
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
         days.push((
@@ -219,6 +222,7 @@ export default class Calendar extends Component {
             isFuture={dayIsFuture}
             isToday={argMonthIsToday && (dayIndex === todayIndex)}
             isSelected={selectedMonthIsArg && (dayIndex === selectedIndex)}
+            isSelectable={daySelectable}
             event={events && events[dayIndex]}
             showEventIndicators={this.props.showEventIndicators}
             customStyle={this.props.customStyle}
